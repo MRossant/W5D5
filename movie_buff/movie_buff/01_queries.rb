@@ -67,9 +67,11 @@ def directed_by_one_of(them)
   # Movie.where(yr: years)
   #
   # Find the id and title of all the movies directed by one of 'them'.
+  #debugger
   Movie
     .select(:id, :title)
-    .where(director_id: them)
+    .joins(:director)
+    .where(name: them)
 
 
 end
@@ -80,10 +82,16 @@ def movie_names_before_1940
   # Movie.where('score < 2.0').pluck(:title)
   # => ['Police Academy: Mission to Moscow']
   #
-  # Pluck works similarly to select, except that it converts a query result
-  # directly into a Ruby Array instead of an ActiveRecord object. This can
+  # Pluck works similarly to select, except
+  # that it converts a query result
+  # directly into a Ruby Array instead of 
+  #an ActiveRecord object. This can
   # improve performace for larger queries.
   #
-  # Use pluck to find the title of all movies made before 1940.
+  # Use pluck to find the title of 
+  #all movies made before 1940.
+  Movie
+    .where('yr < 1940')
+    .pluck(:title)
 
 end
