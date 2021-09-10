@@ -43,16 +43,36 @@ def cast_list(title)
 end
 
 def vanity_projects
-  # List the title of all movies in which the director also appeared
+  # List the title of all movies in 
+  #which the director also appeared
   # as the starring actor.
-  # Show the movie id and title and director's name.
+  # Show the movie id and title 
+  #and director's name.
 
-  # Note: Directors appear in the 'actors' table.
+  # Note: Directors appear in the 
+  #'actors' table.
+  Movie
+  .select(:id, 'actors.name', :title)
+  .joins(:director)
+  .joins(:castings)
+  .where('director_id = castings.actor_id AND castings.ord = 1')
+  #.where('castings.ord = 1')
+  
+
 
 end
 
 def most_supportive
-  # Find the two actors with the largest number of non-starring roles.
-  # Show each actor's id, name and number of supporting roles.
+  # Find the two actors with the 
+  #largest number of non-starring roles.
+  # Show each actor's id, name and 
+  #number of supporting roles.
+  Actor
+    .select(:id, :name, 'COUNT(*)')
+    .joins(:castings)
+    .where('castings.ord > 1')
+    .group(:id)
+    .order('COUNT(*) DESC')
+    .limit(2)
 
 end
