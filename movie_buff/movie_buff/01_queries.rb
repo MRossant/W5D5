@@ -46,14 +46,20 @@ def biggest_cast
   #
   # Find the id and title of the 3 movies with the
   # largest casts (i.e most actors)
+  Movie
+  .select(:id, :title)
+  .joins(:castings)
+  .group(:id)
+  .order('COUNT(*) DESC')
+  .limit(3)
 
 end
 
 def directed_by_one_of(them)
   # Consider the following:
   #
-  # Movie.where('yr IN (?)', years)
-  #
+  # Movie.where('yr IN (?)', years) 
+  
   # We can use IN to test if an element is present in an array.
   #
   # ActiveRecord gives us an even better way to write this:
@@ -61,7 +67,7 @@ def directed_by_one_of(them)
   # Movie.where(yr: years)
   #
   # Find the id and title of all the movies directed by one of 'them'.
-
+  
 end
 
 def movie_names_before_1940
