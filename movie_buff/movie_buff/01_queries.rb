@@ -5,7 +5,10 @@ def it_was_ok
   #
   # We can use ranges (a..b) inside a where method.
   #
-  # Find the id, title, and score of all movies with scores between 2 and 3
+  # Find the id, title, and score of all movies
+  # with scores between 2 and 3
+  Movie.select(:id,:title, :score).where(score: 2..3)
+
 
 end
 
@@ -16,10 +19,16 @@ def harrison_ford
   #   .joins(:movies)
   #   .where(movies: { title: 'Blade Runner' })
   #
-  # It's possible to join based on active record relations defined in models.
+  # It's possible to join based on 
+  #active record relations defined in models.
   #
   # Find the id and title of all movies in which Harrison Ford
   # appeared but not as a lead actor
+  # Actor.joins(:movies).select()
+  Movie.select(:id, :title)
+    .joins(:actors).joins(:castings)
+    .where(actors: {name: 'Harrison Ford'}).where.not(castings: {ord: '1'})
+
 
 end
 
